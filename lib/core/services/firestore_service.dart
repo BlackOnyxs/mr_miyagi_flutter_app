@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:mr_miyagi_app/core/models/customer_user.dart';
+import 'package:mr_miyagi_app/core/models/daily_lunch_model.dart';
 import 'package:mr_miyagi_app/core/models/menu_section_base.dart';
 import 'package:mr_miyagi_app/core/models/promotion_model.dart';
 import 'package:mr_miyagi_app/core/utils/database_constant.dart';
@@ -20,7 +21,11 @@ class FirestoreService{
   final CollectionReference _homeSectionsCollectionReference = 
         Firestore.instance.collection(HOME_SECTIONS_PATH);
 
+  final CollectionReference _dailyLunchCollectionReference = 
+        Firestore.instance.collection(DAILY_LUNCH_PATH);
+
   final _promotionContoller = BehaviorSubject<List<PromotionModel>>();
+  final _dailyLunchContoller = BehaviorSubject<List<DailyLunchModel>>();
 
   final Utils _utils = new Utils(); 
   
@@ -66,7 +71,7 @@ class FirestoreService{
     return _promotionContoller.stream;                                               
   }
 
-  Future getServicesOnceOff()async{
+  Future getHomeSectionsOnceOff()async{
     try {
       var sectionsDocumentsSnapshot = await _homeSectionsCollectionReference.getDocuments();
       if (sectionsDocumentsSnapshot.documents.isNotEmpty) {
@@ -81,9 +86,23 @@ class FirestoreService{
       }
     }
   }
+
+  Stream listenDailyLunch(){
+    _dailyLunchCollectionReference.snapshots().listen((dailyLunchSnapshot){
+      if(dailyLunchSnapshot.documents.isNotEmpty){
+        var dailyLunches = dailyLunchSnapshot.documents
+        .map((snapshot)=> DailyLunchModel.fromJson(snapshot.data))
+        .where((mappedItem)=> mappedItem.id != null)
+        .toList();
+        _dailyLunchContoller.sink.add(dailyLunches);
+      }
+    }); 
+    return _dailyLunchContoller.stream;                                               
+  }
  
   void dispose() { 
     _promotionContoller?.close();
+    _dailyLunchContoller?.close();
   }
 
 }

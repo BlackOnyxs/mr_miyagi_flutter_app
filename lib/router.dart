@@ -1,7 +1,7 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mr_miyagi_app/core/models/address_model.dart';
+import 'package:mr_miyagi_app/ui/views/daily_lunch_view.dart';
 import 'package:mr_miyagi_app/ui/views/location_setting_view.dart';
 
 
@@ -32,6 +32,9 @@ Route<dynamic> generateRoute( RouteSettings settings ){
 
     case routes.HOME_VIEW_ROUTE:
       return MaterialPageRoute( builder: ( context) => HomeView());
+
+    case routes.DAILY_LUCNH_VIEW_ROUTE:
+      return MaterialPageRoute( builder: ( context) => DailyLunchView());
     
     default: 
     return MaterialPageRoute( builder: ( context) => StartUpView());

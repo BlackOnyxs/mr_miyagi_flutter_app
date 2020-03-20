@@ -4,3 +4,4 @@ const String FOOD_PATH = 'food';
 
 const PROMOTION_PATH = 'promotions';
 const HOME_SECTIONS_PATH = 'services';
+const DAILY_LUNCH_PATH = 'daily-lunch';

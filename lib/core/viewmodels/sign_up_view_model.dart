@@ -28,7 +28,7 @@ class SignUpViewModel extends BaseModel with Validators{
     setBusy(false);
     if (result is bool) {
       if (result) {
-        _navigationService.navigateToPop(ADDRESS_SETTINGS_VIEW_ROUTE);
+        _navigationService.navigateToPop(START_UP_VIEW_ROUTE);
       }else{
         await _dialogService.showDialog(
           title: 'Sign Up Failure!',

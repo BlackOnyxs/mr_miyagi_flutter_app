@@ -37,7 +37,7 @@ class HomeViewModel extends BaseModel{
   }
    Future fetchServiceSections()async {
      setBusy(true);
-    var sectionsResults = await _firestoreService.getServicesOnceOff();
+    var sectionsResults = await _firestoreService.getHomeSectionsOnceOff();
     
     if (sectionsResults is List<MenuSectionBase>) {
       _sections = sectionsResults;

@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:mr_miyagi_app/core/viewmodels/daily_lunch_view_model.dart';
 import 'package:mr_miyagi_app/core/viewmodels/home_view_model.dart';
 
 import 'core/services/auth_service.dart';
@@ -34,5 +35,6 @@ void setUpLocator(){
   locator.registerLazySingleton(() => LocationSettingViewModel());
 
   locator.registerLazySingleton(() => HomeViewModel());
+  locator.registerLazySingleton(() => DailyLunchViewModel());
   
 }
