@@ -7,24 +7,23 @@ import '../../locator.dart';
 import 'base_model.dart';
 
 class StartUpViewModel extends BaseModel{
-  final _autheticationService = locator<AuthenticationService>();
+  final _authenticationService = locator<AuthenticationService>();
   final _navigationService = locator<NavigationService>();
 
   Future handleStartUpLogic() async {
-    var hasLoggedInUser = await _autheticationService.isUserLoggedIn();
+    var hasLoggedInUser = await _authenticationService.isUserLoggedIn();
 
     if(hasLoggedInUser){
-      if(_autheticationService.currentUser != null ){
-        if (_autheticationService.currentUser.address != null &&
-            _autheticationService.currentUser.address.length >= 1 ) {
-          _navigationService.navigateToPop(HOME_VIEW_ROUTE);
+      if(_authenticationService.currentUser != null ){
+        if (_authenticationService.currentUser.address != null &&
+            _authenticationService.currentUser.address.length >= 1 ) {
+          _navigationService.navigateToPop(LOCATION_SETTINGS_VIEW_ROUTE);
         }else{
-          _navigationService.navigateToPop(ADDRESS_SETTINGS_VIEW_ROUTE); 
+          _navigationService.navigateToPop(HOME_VIEW_ROUTE); 
         }
       }
     }else{
-      //TODO:change this for pop function
-      _navigationService.navigateToPop(SIGNUP_VIEW_ROUTE);
+      _navigationService.navigateToPop(LOGIN_VIEW_ROUTE);
     }
   }
 }
