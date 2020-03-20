@@ -29,7 +29,6 @@ class MyApp extends StatelessWidget {
       ),
       onGenerateRoute: router.generateRoute,
       initialRoute: routes.START_UP_VIEW_ROUTE,
-      // home: SignUpView(),
     );
   }
 }

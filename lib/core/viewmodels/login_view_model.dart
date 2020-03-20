@@ -27,7 +27,7 @@ class LogInViewModel extends BaseModel with Validators{
     setBusy(false);
     if(result is bool){
       if (result) {
-        _navigationService.navigateToPush(HOME_VIEW_ROUTE);
+        _navigationService.navigateToPop(ADDRESS_SETTINGS_VIEW_ROUTE);
       }
     }else{
       await _dialogService.showDialog(

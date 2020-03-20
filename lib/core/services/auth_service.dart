@@ -47,7 +47,7 @@ class AuthenticationService {
           fullName: fullName
         );
         await _firestoreService.createUser(_currentUser);
-        await _userPreferences.initPref();
+        /* await _userPreferences.initPref();
         if (_userPreferences.aplicationVersion == 1) {
           _dbService.addUser(_currentUser.id);
         }else{
@@ -55,7 +55,7 @@ class AuthenticationService {
           if (result == null) {
             _dbService.addUser(_currentUser.id);
           }
-        }
+        } */
         return authResult.user != null;
     } catch (e) {
         return e.message;

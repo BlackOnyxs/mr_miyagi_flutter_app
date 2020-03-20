@@ -43,19 +43,12 @@ class DBProvider{
           ' firebaseId TEXT'
           ')'
         );
-        await db.execute(
-          'CREATE TABLE $FOOD_PATH ('
-          ' id TEXT PRIMARY KEY, '
-          ' name TEXT, '
-          ' price TEXT, '
-          ' orderId TEXT, '
-          ' FOREIGN KEY (orderId) REFERENCES $ORDER_PATH (orderId)'
-          ')'
-        );
+        
         //TODO: create all others master before Order master
         await db.execute(
-          ' CREATE TABLE $ORDER_PATH ('
-          ' id TEXT PRIMARY KEY, '
+          'CREATE TABLE $ORDER_PATH ('
+          ' localId INTEGER PRIMARY KEY AUTOINCREMENT, '
+          ' orderId TEXT, '
           ' restaurantId TEXT, '
           ' subTotalPrice TEXT, '
           ' deliveryPrice TEXT, '
@@ -65,9 +58,20 @@ class DBProvider{
           ' latitudeR TEXT, '
           ' longitudeR TEXT, '
           ' userId TEXT, '
-          ' FOREIGN KEY (userId) REFERENCES $CUSTOMER_USER_PATH (userId)'
+          ' FOREIGN KEY(userId) REFERENCES $CUSTOMER_USER_PATH(firebaseId)'
           ')'
         );
+
+         await db.execute(
+          'CREATE TABLE $FOOD_PATH('
+          ' localId INTEGER PRIMARY KEY AUTOINCREMENT, '
+          ' foodId TEXT, '
+          ' name TEXT, '
+          ' price TEXT, '
+          ' orderId TEXT, '
+          ' FOREIGN KEY(orderId) REFERENCES $ORDER_PATH(orderId)'
+          ')'
+        ); 
       } 
     );
   }
