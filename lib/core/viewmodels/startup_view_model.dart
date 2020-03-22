@@ -16,10 +16,10 @@ class StartUpViewModel extends BaseModel{
     if(hasLoggedInUser){
       if(_authenticationService.currentUser != null ){
         if (_authenticationService.currentUser.address != null &&
-            _authenticationService.currentUser.address.length >= 1 ) {
-          _navigationService.navigateToPop(LOCATION_SETTINGS_VIEW_ROUTE);
+            _authenticationService.currentUser.address.length >= 0 ) {
+          _navigationService.navigateToPop(HOME_VIEW_ROUTE);
         }else{
-          _navigationService.navigateToPop(HOME_VIEW_ROUTE); 
+          _navigationService.navigateToPop(ADDRESS_SETTINGS_VIEW_ROUTE); 
         }
       }
     }else{

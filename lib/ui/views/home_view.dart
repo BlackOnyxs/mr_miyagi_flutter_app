@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mr_miyagi_app/core/models/menu_section_base.dart';
 import 'package:mr_miyagi_app/core/utils/routing_constant.dart';
 import 'package:mr_miyagi_app/core/viewmodels/home_view_model.dart';
-import 'package:mr_miyagi_app/ui/widgets/card_swiper.dart';
+import 'package:mr_miyagi_app/ui/widgets/promotion_card_swiper.dart';
 
 import 'base_view.dart';
 
@@ -17,6 +17,8 @@ class HomeView extends StatelessWidget {
       onModelReady: ( model){
          model.fetchPromotions();
          model.fetchServiceSections();
+        // model.createMenuSection();
+         //model.createDailyLunch();
       },
       onModelDestroy: ( model ) => model.dispose(),
       builder:  ( context, model, child ) => Scaffold(
@@ -58,7 +60,7 @@ class HomeView extends StatelessWidget {
 
   Widget _swiperCard( BuildContext context, HomeViewModel model ){
     return model.promotions != null ?
-    CardSwiper(
+    PromotionCardSwiper(
       model: model,
       promotions: model.promotions
     ) : Center(

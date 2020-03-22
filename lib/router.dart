@@ -1,16 +1,21 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mr_miyagi_app/core/models/address_model.dart';
+import 'package:mr_miyagi_app/core/models/daily_lunch_model.dart';
+import 'package:mr_miyagi_app/ui/views/daily_lunch_view.dart';
 import 'package:mr_miyagi_app/ui/views/location_setting_view.dart';
+import 'package:mr_miyagi_app/ui/views/menu_view.dart';
+import 'package:mr_miyagi_app/ui/widgets/food_detail_view_alert.dart';
 
 
+import 'core/models/food_model.dart';
 import 'core/utils/routing_constant.dart' as routes;
 import 'ui/views/home_view.dart';
 import 'ui/views/login_view.dart';
 import 'ui/views/setting_view.dart';
 import 'ui/views/sign_up_view.dart';
 import 'ui/views/startup_view.dart';
+import 'ui/widgets/food_card_swiper.dart';
 
 Route<dynamic> generateRoute( RouteSettings settings ){
   switch ( settings.name ){
@@ -32,6 +37,20 @@ Route<dynamic> generateRoute( RouteSettings settings ){
 
     case routes.HOME_VIEW_ROUTE:
       return MaterialPageRoute( builder: ( context) => HomeView());
+
+    case routes.DAILY_LUCNH_VIEW_ROUTE:
+      return MaterialPageRoute( builder: ( context) => DailyLunchView());
+
+    case routes.FOOD_DETAIL_VIEW_ROUTE:
+      DailyLunchModel dailyLunch = settings.arguments;
+      return MaterialPageRoute( builder: ( context) => FoodDeatilViewAlert( dailyLunch: dailyLunch));
+
+    case routes.MENU_VIEW_ROUTE:
+      return MaterialPageRoute( builder: ( context) => MenuView());
+    
+    case routes.MENU_SECTION_DETAIL_ROUTE:
+      List<FoodModel> foods = settings.arguments;
+      return MaterialPageRoute( builder: ( context) => FoodCardSwiper( foods: foods));
     
     default: 
     return MaterialPageRoute( builder: ( context) => StartUpView());

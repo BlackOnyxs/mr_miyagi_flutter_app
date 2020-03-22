@@ -1,67 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mr_miyagi_app/core/models/address_model.dart';
 import 'package:mr_miyagi_app/core/models/customer_user.dart';
+import 'package:mr_miyagi_app/core/models/food_model.dart';
 import 'package:mr_miyagi_app/core/models/latlng_model.dart';
+import 'package:mr_miyagi_app/core/models/order_model.dart';
 
 
 class Utils {
 
-  /* List<RestaurantModel> builRestaurant(List<DocumentSnapshot> data){
-    List<RestaurantModel> restaurants = new List();
-    for (var i = 0; i < data.length; i++) {
-      RestaurantModel currentRest = new RestaurantModel(
-      id            : data[i].data["id"],
-      name          : data[i].data["name"],
-      description   : data[i].data["description"],
-      feedback      : data[i].data["feedback"],
-      location      : data[i].data["location"],
-      photoUrl      : data[i].data["photoUrl"],
-      schedule      : data[i].data["schedule"],
-    );
-    List<FoodModel> menu = new List();
-    List<dynamic> menuData = data[i].data["menu"] as List;
-      for (var e = 0; e < menuData.length; e++) {
-        FoodModel currentFood = new FoodModel(
-          id: menuData[e]["id"],
-          name: menuData[e]["name"],
-          description: menuData[e]["description"],
-          type: menuData[e]["type"],
-          price: menuData[e]["price"],
-          photoUrl: menuData[e]["photoUrl"],
-          model: menuData[e]["model"] 
-        );
-        List<IngredientModel> ingredients = new List();
-        List<dynamic> ingredientsData = menuData[e]["ingredients"] as List;
-        for (var j = 0; j < ingredients.length; j++) {
-          IngredientModel currentIngredient = new IngredientModel(
-            id: ingredientsData[j],
-            name: ingredientsData[j]
-          );
-          ingredients.add(currentIngredient);
-        }
-        currentFood.ingredients = ingredients;
-        List<String> tags = new List();
-        List<dynamic> tagsData = data[i].data["tags"] as List;
-        for (var k = 0; k < data.length; k++) {
-          String currentTag = tagsData[k];
-          tags.add(currentTag);
-        }
-        menu.add(currentFood);
-        currentRest.tags = tags;
-      }
-      List<String> sections = new List();
-      List<dynamic> sectiondata = data[i].data["menuSections"];
-      for (var l = 0; l < sectiondata.length; l++) {
-        String currentSection = sectiondata[l];
-        sections.add(currentSection);
-      }
-      currentRest.menuSections = sections;
-      currentRest.menu = menu;
-      restaurants.add(currentRest);
-    }
-    return restaurants;
-  }
- */
+  
   CustomerUser fetchUser( DocumentSnapshot data){
     CustomerUser _currentUser = new CustomerUser(
       id: data['id'],
@@ -103,6 +50,8 @@ class Utils {
     _currentUser.ordersId = _ordersId;
     return _currentUser;
   }
+
+
 /* 
   OrderModel fetchOrder( DocumentSnapshot data){
     OrderModel _currentOrder = new OrderModel(

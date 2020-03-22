@@ -1,22 +1,21 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'menu_section_base.g.dart';
+
+@JsonSerializable( explicitToJson: true )
 class MenuSectionBase {
     String id;
     String displayName;
+    String photoUrl;
     String iconName;
 
     MenuSectionBase({
         this.id,
         this.displayName,
+        this.photoUrl,
         this.iconName,
     });
 
-    MenuSectionBase.fromData(Map<String, dynamic> data) 
-    :   id          = data["id"],
-        displayName = data["displayName"],
-        iconName    = data["iconName"];
-
-    Map<String, dynamic> toMap() => {
-        "id"       : id,
-        "name"     : displayName,
-        "iconName" : iconName,
-    };
+    factory MenuSectionBase.fromJson(Map<String, dynamic> json) => _$MenuSectionBaseFromJson(json); 
+    Map<String, dynamic> toJson () => _$MenuSectionBaseToJson(this);
 }
