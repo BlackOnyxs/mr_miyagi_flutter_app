@@ -7,12 +7,14 @@ class DailyLunchModel{
   String id;
   String displayName;
   FoodModel food;
+  String price;
 
 
   DailyLunchModel({
     this.displayName,
     this.id,
-    this.food
+    this.food,
+    this.price,
   });
 
   factory DailyLunchModel.fromJson(Map<String, dynamic> json) => _$DailyLunchModelFromJson(json);

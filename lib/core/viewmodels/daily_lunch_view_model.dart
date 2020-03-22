@@ -2,11 +2,12 @@ import 'package:flutter/services.dart';
 import 'package:mr_miyagi_app/core/models/daily_lunch_model.dart';
 import 'package:mr_miyagi_app/core/services/firestore_service.dart';
 import 'package:mr_miyagi_app/core/services/navigation_service.dart';
+import 'package:mr_miyagi_app/core/utils/validators.dart';
 import 'package:mr_miyagi_app/core/viewmodels/base_model.dart';
 import 'package:mr_miyagi_app/locator.dart';
 import 'package:rxdart/rxdart.dart';
 
-class DailyLunchViewModel extends BaseModel{
+class DailyLunchViewModel extends BaseModel with Validators{
   FirestoreService _firestoreService = locator<FirestoreService>();
   NavigationService _navigationService = locator<NavigationService>();
 
@@ -28,6 +29,7 @@ class DailyLunchViewModel extends BaseModel{
     }
   }
 
+  
   navigateTo(String path, DailyLunchModel dailyLunch){
     _navigationService.navigateToPush(path, arg: dailyLunch);
   }

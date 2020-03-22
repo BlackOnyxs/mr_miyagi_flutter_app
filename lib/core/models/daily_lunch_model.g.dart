@@ -13,6 +13,7 @@ DailyLunchModel _$DailyLunchModelFromJson(Map<String, dynamic> json) {
     food: json['food'] == null
         ? null
         : FoodModel.fromJson(json['food'] as Map<String, dynamic>),
+    price: json['price'] as String,
   );
 }
 
@@ -21,4 +22,5 @@ Map<String, dynamic> _$DailyLunchModelToJson(DailyLunchModel instance) =>
       'id': instance.id,
       'displayName': instance.displayName,
       'food': instance.food?.toJson(),
+      'price': instance.price,
     };

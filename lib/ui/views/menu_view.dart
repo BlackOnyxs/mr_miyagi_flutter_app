@@ -1,15 +1,15 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:mr_miyagi_app/core/models/daily_lunch_model.dart';
+import 'package:mr_miyagi_app/core/models/menu_section_model.dart';
 import 'package:mr_miyagi_app/core/utils/routing_constant.dart';
-import 'package:mr_miyagi_app/core/viewmodels/daily_lunch_view_model.dart';
-import 'package:mr_miyagi_app/ui/widgets/food_detail_view_alert.dart';
+import 'package:mr_miyagi_app/core/viewmodels/menu_view_model.dart';
+import 'package:mr_miyagi_app/ui/widgets/food_card_swiper.dart';
 
 import 'base_view.dart';
 
-class DailyLunchView extends StatelessWidget {
-  DailyLunchView({Key key}) : super(key: key);
+class MenuView extends StatelessWidget {
+  MenuView({Key key}) : super(key: key);
    
   final titleStyle = TextStyle(fontSize: 25, color: Colors.white,  fontWeight: FontWeight.bold);
   final descriptionStyle = TextStyle(fontSize: 15, color: Colors.white, fontStyle: FontStyle.normal);
@@ -17,8 +17,8 @@ class DailyLunchView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<DailyLunchViewModel>(
-      onModelReady: ( model )=> model.listenDailyLunch(),
+    return BaseView<MenuViewModel>(
+      onModelReady: ( model )=> model.getMenuSections(),
       builder: ( context, model, child) =>
       Scaffold(
         appBar: AppBar(
@@ -31,18 +31,18 @@ class DailyLunchView extends StatelessWidget {
     );
   }
 
-  Widget _createList( DailyLunchViewModel model ) {
-    List<DailyLunchModel> lunches = new List();
+  Widget _createList( MenuViewModel model ) {
+    List<MenuSection> sections = new List();
     return StreamBuilder(
-      stream: model.dailyLunchStream,
-      builder: ( BuildContext context, AsyncSnapshot<List<DailyLunchModel>> snapshot){
+      stream: model.sectionStream,
+      builder: ( BuildContext context, AsyncSnapshot<List<MenuSection>> snapshot){
         if (snapshot.hasData) {
-          lunches = snapshot.data;
+          sections = snapshot.data;
         }
-        if (lunches != null && lunches.length>0) {
+        if (sections != null && sections.length>0) {
           return ListView.builder(
-            itemCount:lunches.length,
-            itemBuilder: ( context, i) => _createItem(context, lunches[i], model),
+            itemCount:sections.length,
+            itemBuilder: ( context, i) => _createItem(context, sections[i], model),
           ); 
         }else{
           return Center(
@@ -56,15 +56,15 @@ class DailyLunchView extends StatelessWidget {
   
   }
 
-  Widget _createItem( BuildContext context, DailyLunchModel dailyLunch, DailyLunchViewModel model ){
+  Widget _createItem( BuildContext context, MenuSection section, MenuViewModel model ){
   final size = MediaQuery.of(context).size;
   final imageBackground = Container(
     height: size.height * 0.3,
     width: double.infinity,
-    child: ( dailyLunch.food.photoUrl == null ) ?
+    child: ( section.photoUrl == null ) ?
       Image(image: AssetImage('assets/no-image.jpg'))
       : FadeInImage(
-        image: NetworkImage(dailyLunch.food.photoUrl),
+        image: NetworkImage(section.photoUrl),
         placeholder: AssetImage("assets/loading.gif"),
         height: 200.0,
         width: double.infinity,
@@ -88,7 +88,7 @@ class DailyLunchView extends StatelessWidget {
                 filter: ImageFilter.blur(sigmaX: 1.5, sigmaY: 1.5),
                 child: Column(
                   children: <Widget>[
-                    Text('${dailyLunch.food.name}', style: titleStyle),
+                    Text('${section.displayName}', style: titleStyle),
 
                   ],
               )
@@ -99,7 +99,14 @@ class DailyLunchView extends StatelessWidget {
         ),
       ),
       onTap: (){
-        model.navigateTo(FOOD_DETAIL_VIEW_ROUTE, dailyLunch);
+        model.navigateTo(MENU_SECTION_DETAIL_ROUTE, arg:section.foods);
+        /* showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: ( context ){
+            return FoodCardSwiper(foods: section.foods);
+          }
+        ); */
       }
     );
   }

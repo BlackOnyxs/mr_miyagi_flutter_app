@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:mr_miyagi_app/core/models/customer_user.dart';
 import 'package:mr_miyagi_app/core/models/daily_lunch_model.dart';
 import 'package:mr_miyagi_app/core/models/menu_section_base.dart';
+import 'package:mr_miyagi_app/core/models/menu_section_model.dart';
 import 'package:mr_miyagi_app/core/models/promotion_model.dart';
 import 'package:mr_miyagi_app/core/utils/database_constant.dart';
 import 'package:mr_miyagi_app/core/utils/utils.dart';
@@ -23,6 +24,9 @@ class FirestoreService{
 
   final CollectionReference _dailyLunchCollectionReference = 
         Firestore.instance.collection(DAILY_LUNCH_PATH);
+
+  final CollectionReference _menuSectionCollectionReference = 
+        Firestore.instance.collection(MENU_SECTIONS_PATH);
 
   final _promotionContoller = BehaviorSubject<List<PromotionModel>>();
   final _dailyLunchContoller = BehaviorSubject<List<DailyLunchModel>>();
@@ -76,7 +80,7 @@ class FirestoreService{
       var sectionsDocumentsSnapshot = await _homeSectionsCollectionReference.getDocuments();
       if (sectionsDocumentsSnapshot.documents.isNotEmpty) {
         return sectionsDocumentsSnapshot.documents
-          .map((snapshot)=>  MenuSectionBase.fromData(snapshot.data))
+          .map((snapshot)=>  MenuSectionBase.fromJson(snapshot.data))
           .where((mappedItem)=> mappedItem.id != null)
           .toList();
       }
@@ -100,6 +104,40 @@ class FirestoreService{
     return _dailyLunchContoller.stream;                                               
   }
  
+ Future createDailyLunch( DailyLunchModel lunchModel ) async{
+   try {
+     await _dailyLunchCollectionReference.document().setData(lunchModel.toJson());
+   } catch (e) {
+     if (e is PlatformException) {
+        return e.message;
+      }
+   }
+ }
+ Future createMenuSection( MenuSection section ) async{
+   try {
+     await _menuSectionCollectionReference.document().setData(section.toJson());
+   } catch (e) {
+     if (e is PlatformException) {
+        return e.message;
+      }
+   }
+ }
+
+ Future getMenuSections()async{
+   try {
+     var menuSectionSnapshot = await _menuSectionCollectionReference.getDocuments();
+      if (menuSectionSnapshot.documents.isNotEmpty) {
+        return menuSectionSnapshot.documents
+          .map((snapshot)=>  MenuSection.fromJson(snapshot.data))
+          .where((mappedItem)=> mappedItem.id != null)
+          .toList();
+      }
+   } catch (e) {
+     if (e is PlatformException) {
+        return e.message;
+      }
+   }
+ }
   void dispose() { 
     _promotionContoller?.close();
     _dailyLunchContoller?.close();

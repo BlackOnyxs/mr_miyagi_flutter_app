@@ -9,3 +9,6 @@ const String LOCATION_SETTINGS_VIEW_ROUTE = 'location-setting';
 
 const String DAILY_LUCNH_VIEW_ROUTE = 'daily-lunch';
 const String FOOD_DETAIL_VIEW_ROUTE = 'lunch-detail';
+const String MENU_VIEW_ROUTE = 'menu';
+const String MENU_SECTION_DETAIL_ROUTE = 'menu-section-detail';
+

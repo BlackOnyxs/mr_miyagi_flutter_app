@@ -4,10 +4,10 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:mr_miyagi_app/core/models/promotion_model.dart';
 import 'package:mr_miyagi_app/core/viewmodels/home_view_model.dart';
 
-class CardSwiper extends StatelessWidget {
+class PromotionCardSwiper extends StatelessWidget {
   final List<PromotionModel> promotions;
   final HomeViewModel model;
-  const CardSwiper({@required this.promotions, this.model});
+  const PromotionCardSwiper({@required this.promotions, this.model});
 
   @override
   Widget build(BuildContext context) {
