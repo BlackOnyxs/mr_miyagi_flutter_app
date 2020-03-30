@@ -5,8 +5,10 @@ import 'package:mr_miyagi_app/core/models/customer_user.dart';
 import 'package:mr_miyagi_app/core/models/daily_lunch_model.dart';
 import 'package:mr_miyagi_app/core/models/menu_section_base.dart';
 import 'package:mr_miyagi_app/core/models/menu_section_model.dart';
+import 'package:mr_miyagi_app/core/models/order_model.dart';
 import 'package:mr_miyagi_app/core/models/promotion_model.dart';
 import 'package:mr_miyagi_app/core/utils/database_constant.dart';
+import 'package:mr_miyagi_app/core/utils/state_constant.dart';
 import 'package:mr_miyagi_app/core/utils/utils.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -28,8 +30,15 @@ class FirestoreService{
   final CollectionReference _menuSectionCollectionReference = 
         Firestore.instance.collection(MENU_SECTIONS_PATH);
 
+  final CollectionReference _orderRequestCollectionReference = 
+        Firestore.instance.collection(ORDER_REQUEST_PATH);
+
+  final CollectionReference _activeOrderCollectionReference = 
+        Firestore.instance.collection(ACTIVE_ORDER_PATH);
+
   final _promotionContoller = BehaviorSubject<List<PromotionModel>>();
   final _dailyLunchContoller = BehaviorSubject<List<DailyLunchModel>>();
+  final _orderController = BehaviorSubject<OrderModel>();
 
   final Utils _utils = new Utils(); 
   
@@ -42,9 +51,9 @@ class FirestoreService{
       }
     }
   }
-  Future updateUser( String uid, CustomerUser user ) async {
+  Future updateUser( CustomerUser user ) async {
     try {
-      await _userCollectionReference.document(uid).updateData(user.toJson());
+      await _userCollectionReference.document(user.id).updateData(user.toJson());
     } catch (e) {
       if (e is PlatformException) {
         return e.message;
@@ -138,9 +147,73 @@ class FirestoreService{
       }
    }
  }
+
+ Future sentOrder( OrderModel currentOrder)async{
+    try{
+      await _orderRequestCollectionReference.document(currentOrder.id).setData(currentOrder.toJson());
+    }catch(e){
+      if (e is PlatformException) {
+        return e.message;
+      }
+    }
+  }
+  Future getOrderOnceOff( String id ) async{
+    try {
+    var orderData = await _orderRequestCollectionReference.document(id).get();
+    if (orderData.exists) {
+      return OrderModel.fromJson(orderData.data);
+    } else{
+      var orderData = await _activeOrderCollectionReference.document(id).get();
+      return OrderModel.fromJson(orderData.data);
+    }
+    } catch (e) {
+      if (e is PlatformException) {
+        return e.message;
+      }
+    }
+  }
+
+  Stream listenOrder( String id ){
+    bool exist = true; 
+    _orderRequestCollectionReference.document(id).snapshots().listen((dataSnapshot){
+      if (dataSnapshot.exists) {
+        if (dataSnapshot.data.isNotEmpty) {
+        var orderData = OrderModel.fromJson(dataSnapshot.data);
+        if (orderData.state != null ) {
+          if (orderData.state is int && orderData.state< onFinish) {
+            _orderController.sink.add(orderData);
+          } 
+        }
+      }
+      
+      }else{
+        exist = false;
+      }
+    });
+    if ( !exist ) {
+      _activeOrderCollectionReference.document(id).snapshots().listen((dataSnapshot){
+          if (dataSnapshot.exists) {
+            if (dataSnapshot.data.isNotEmpty) {
+            var orderData = OrderModel.fromJson(dataSnapshot.data);
+            if (orderData.state != null ) {
+              if (orderData.state is int ) {
+                _orderController.sink.add(orderData);
+              } 
+            }
+          }
+        }else{
+          /* TODO: add error */
+        }
+      });
+    }
+    return _orderController.stream;
+  }
+  
+    
   void dispose() { 
     _promotionContoller?.close();
     _dailyLunchContoller?.close();
+    _orderController?.close();
   }
 
 }

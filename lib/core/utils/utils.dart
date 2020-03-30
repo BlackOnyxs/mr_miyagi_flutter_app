@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mr_miyagi_app/core/models/address_model.dart';
 import 'package:mr_miyagi_app/core/models/customer_user.dart';
-import 'package:mr_miyagi_app/core/models/food_model.dart';
 import 'package:mr_miyagi_app/core/models/latlng_model.dart';
-import 'package:mr_miyagi_app/core/models/order_model.dart';
 
 
 class Utils {
@@ -17,9 +15,10 @@ class Utils {
       feedback: data['feedback'],
       email: data['email'], 
     );
-    List<AddressModel> _addresses = new List();
+    
     List<dynamic> _addressesData = data['address'] as List;
     if (_addressesData != null) {
+      List<AddressModel> _addresses = new List();
       for (var i = 0; i < _addressesData.length; i++) {
       AddressModel _currentAddress = new AddressModel(
         neighborhoodName    : _addressesData[i]['neighborhoodName'],
@@ -36,18 +35,31 @@ class Utils {
       _currentAddress.location = _currentLatLng;
       _addresses.add(_currentAddress);
       }
+      _currentUser.address = _addresses;
     }
     
-    _currentUser.address = _addresses;
-    List<String> _ordersId = new List();
+    
+    
     List<dynamic> _orderIdData = data['ordersId'] as List;
     if(_orderIdData != null){
+      List<String> _ordersId = new List();
       for (var e = 0; e < _orderIdData.length; e++) {
         String _curentOrderId = _orderIdData[e];
         _ordersId.add(_curentOrderId);
       } 
+      _currentUser.ordersId = _ordersId;
     }
-    _currentUser.ordersId = _ordersId;
+    
+    List<dynamic> _activeOrdersData = data['activeOrders'] as List;
+    if(_activeOrdersData != null){
+      List<String> _activeOrders = new List();
+      for (var e = 0; e < _activeOrdersData.length; e++) {
+        String _curentOrderId = _activeOrdersData[e];
+        _activeOrders.add(_curentOrderId);
+      } 
+      _currentUser.activeOrders = _activeOrders;
+    }
+    
     return _currentUser;
   }
 

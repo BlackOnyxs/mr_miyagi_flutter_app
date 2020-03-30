@@ -15,17 +15,18 @@ class FoodCardSwiper extends StatelessWidget {
      builder: ( context, model, child){
        final _screenSize = MediaQuery.of(context).size;
        return Scaffold(
+         resizeToAvoidBottomInset: false,
          backgroundColor: Colors.transparent,
          appBar: AppBar(
            backgroundColor: Colors.transparent,
          ),
           body: Container(
-            padding: EdgeInsets.only(top:20.0),
+            // padding: EdgeInsets.only(top:10.0),
             child: Swiper(
               layout: SwiperLayout.STACK,
-              itemWidth: _screenSize.width *0.8,
-              itemHeight: _screenSize.height *0.8,
-              itemBuilder: (BuildContext conetext, int index){
+              itemWidth: _screenSize.width *0.9,
+              itemHeight: double.infinity,
+              itemBuilder: (BuildContext context, int index){
                 return ClipRRect(
                   borderRadius: BorderRadius.circular(20.0),
                   child: Column(
@@ -45,7 +46,8 @@ class FoodCardSwiper extends StatelessWidget {
   }
   Widget _createImage( String photoUrl, Size size ){
     return Container(
-      height: size.height * 0.4,
+      height: size.height * 0.3,
+      width: double.infinity,
       child: FadeInImage(
         image: NetworkImage(photoUrl),
         placeholder: AssetImage('assets/no-image.png'),
@@ -55,7 +57,6 @@ class FoodCardSwiper extends StatelessWidget {
   }
   Widget _createTitle( FoodModel food, Size size, FoodCardModelView model ){
     return Container(
-      height: size.height * 0.4,
       width: double.infinity,
       color: Colors.white,
       child: Column(
@@ -64,7 +65,7 @@ class FoodCardSwiper extends StatelessWidget {
             color: Colors.white,
             padding: EdgeInsets.only(left: 15.0, right: 15.0, top: 20.0),
             child: Text(
-              food.name,
+              food.displayName,
               style: TextStyle(
                 fontSize: 30.0,
                 fontWeight: FontWeight.bold,

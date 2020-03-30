@@ -1,4 +1,4 @@
-import 'package:mr_miyagi_app/core/models/menu_section_base.dart';
+
 import 'package:mr_miyagi_app/core/models/menu_section_model.dart';
 import 'package:mr_miyagi_app/core/services/dialog_service.dart';
 import 'package:mr_miyagi_app/core/services/firestore_service.dart';

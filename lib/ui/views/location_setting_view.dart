@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:mr_miyagi_app/core/models/address_model.dart';
+import 'package:mr_miyagi_app/core/utils/routing_constant.dart';
 import 'package:mr_miyagi_app/core/viewmodels/location_setting_view_model.dart';
 
 import 'base_view.dart';
@@ -109,9 +110,7 @@ class LocationSettingView extends StatelessWidget {
       )
       ),
       onTap: (){
-        ( model.currentPosition == null)?
-        model.getCurrentPosition(currentAddress) :
-        print('object');
+        model.getCurrentPosition(currentAddress);
       },
    );
  }
@@ -150,7 +149,7 @@ class LocationSettingView extends StatelessWidget {
    )
    ),
     onTap: (){
-        print('From Map');
+        model.navigateTo(MAP_SETTINGS_VIEW_ROUTE, currentAddress: currentAddress );
     }
    );
  }

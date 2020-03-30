@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:mr_miyagi_app/core/models/menu_section_model.dart';
 import 'package:mr_miyagi_app/core/utils/routing_constant.dart';
 import 'package:mr_miyagi_app/core/viewmodels/menu_view_model.dart';
-import 'package:mr_miyagi_app/ui/widgets/food_card_swiper.dart';
 
 import 'base_view.dart';
 

@@ -44,7 +44,7 @@ class DBProvider{
           ')'
         );
         
-        //TODO: create all others master before Order master
+        /* //TODO: create all others master before Order master
         await db.execute(
           'CREATE TABLE $ORDER_PATH ('
           ' localId INTEGER PRIMARY KEY AUTOINCREMENT, '
@@ -71,7 +71,7 @@ class DBProvider{
           ' orderId TEXT, '
           ' FOREIGN KEY(orderId) REFERENCES $ORDER_PATH(orderId)'
           ')'
-        ); 
+        );  */
       } 
     );
   }

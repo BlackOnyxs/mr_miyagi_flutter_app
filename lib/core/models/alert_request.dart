@@ -6,7 +6,7 @@ class AlertRequest {
   final String title;
   final String description;
   final String buttonTitle;
-  final String typeAlert;
+  final int typeAlert;
   final FoodModel food;
 
   AlertRequest({

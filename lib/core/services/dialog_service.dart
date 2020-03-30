@@ -18,7 +18,7 @@ class DialogService {
     String title,
     String description,
     String buttonTitle = "Ok",
-    String typeAlert,
+    int typeAlert,
   }){
     _dialogCompleter = Completer<AlertResponse>();
     _showDialogListener(AlertRequest(

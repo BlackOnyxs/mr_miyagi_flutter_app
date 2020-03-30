@@ -1,8 +1,12 @@
 import 'package:get_it/get_it.dart';
-import 'package:mr_miyagi_app/core/services/cart_service.dart';
-import 'package:mr_miyagi_app/core/viewmodels/daily_lunch_view_model.dart';
-import 'package:mr_miyagi_app/core/viewmodels/home_view_model.dart';
+import 'package:mr_miyagi_app/core/viewmodels/active_orders_view_model.dart';
+import 'package:mr_miyagi_app/core/viewmodels/map_setting_view_model.dart';
+import 'package:mr_miyagi_app/core/viewmodels/order_view_model.dart';
 
+import 'core/services/cart_service.dart';
+import 'core/viewmodels/cart_view_model.dart';
+import 'core/viewmodels/daily_lunch_view_model.dart';
+import 'core/viewmodels/home_view_model.dart';
 import 'core/services/auth_service.dart';
 import 'core/services/dialog_service.dart';
 import 'core/services/firestore_service.dart';
@@ -38,8 +42,12 @@ void setUpLocator(){
 
   locator.registerLazySingleton(() => SettingViewModel());
   locator.registerLazySingleton(() => LocationSettingViewModel());
+  locator.registerLazySingleton(() => MapSettingViewModel());
 
   locator.registerLazySingleton(() => HomeViewModel());
+  locator.registerLazySingleton(() => CartViewModel());
+  locator.registerLazySingleton(() => OrderViewModel());
+  locator.registerLazySingleton(() => ActiveOrderViewModel());
 
   locator.registerLazySingleton(() => DailyLunchViewModel());
   locator.registerLazySingleton(() => FoodDetailAlertModel());

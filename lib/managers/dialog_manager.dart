@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mr_miyagi_app/core/models/alert_request.dart';
 import 'package:mr_miyagi_app/core/models/alert_response.dart';
 import 'package:mr_miyagi_app/core/services/dialog_service.dart';
+import 'package:mr_miyagi_app/core/services/navigation_service.dart';
+import 'package:mr_miyagi_app/core/utils/routing_constant.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 import '../locator.dart';
@@ -16,7 +18,7 @@ class DialogManager extends StatefulWidget{
 
 class _DialogManagerState extends State<DialogManager>{
   DialogService _dialogService = locator<DialogService>();
-
+  NavigationService _navigationService = locator<NavigationService>();
   @override
   void initState() { 
     super.initState();
@@ -40,7 +42,12 @@ class _DialogManagerState extends State<DialogManager>{
           child: Text(request.buttonTitle),
           onPressed: (){
             _dialogService.dialogComplete(AlertResponse(confirmed: true));
-            Navigator.of(context).pop();
+            if( request.typeAlert == NAVIGATE ){
+              Navigator.pop(context);
+              _navigationService.navigateToPush(ADDRESS_SETTINGS_VIEW_ROUTE); //change that for feature in AlertRequestModel
+            }else{
+              Navigator.pop(context);
+            }
           },
         )
       ]).show();

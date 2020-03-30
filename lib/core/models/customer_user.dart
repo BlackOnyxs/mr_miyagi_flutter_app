@@ -14,6 +14,7 @@ class CustomerUser{
   List<String> ordersId;
   final String feedback;
   final String email;
+  List<String> activeOrders;
 
   CustomerUser({
     this.id,
@@ -22,7 +23,8 @@ class CustomerUser{
     this.address, 
     this.ordersId,
     this.feedback,
-    this.email
+    this.email,
+    this.activeOrders,
   });
 
   factory CustomerUser.fromJson(Map<String, dynamic> json) => _$CustomerUserFromJson(json);

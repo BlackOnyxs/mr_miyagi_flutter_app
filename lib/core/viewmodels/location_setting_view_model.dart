@@ -45,7 +45,7 @@ class LocationSettingViewModel extends BaseModel{
         CustomerUser  _currentUser = _authenticationService.currentUser;
         _currentUser.address = new List();
         _currentUser.address.add(currentAddress);
-        var e = _firestoreService.updateUser(_currentUser.id, _currentUser);
+        var e = _firestoreService.updateUser( _currentUser );
           if ( e is PlatformException ) {
             print(e);
           }else{
@@ -72,8 +72,8 @@ class LocationSettingViewModel extends BaseModel{
 
 
 
-  void navigateTo( String path ){
-    _navigationService.navigateToPop(path);
+  void navigateTo( String path, {AddressModel currentAddress} ){
+    _navigationService.navigateToPop(path, arg: currentAddress);
   }
 
 }

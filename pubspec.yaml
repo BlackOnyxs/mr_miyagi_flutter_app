@@ -35,6 +35,8 @@ dependencies:
   flutter_swiper: ^1.1.6
   geolocator: ^5.2.1
   location: ^2.3.5
+  positioned_tap_detector: ^1.0.3
+  google_maps_flutter: ^0.5.22+3
   
 dev_dependencies:
   flutter_test:

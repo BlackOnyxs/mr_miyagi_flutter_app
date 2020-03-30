@@ -6,3 +6,5 @@ const PROMOTION_PATH = 'promotions';
 const HOME_SECTIONS_PATH = 'services';
 const DAILY_LUNCH_PATH = 'daily-lunch';
 const MENU_SECTIONS_PATH = 'menu-section';
+const ORDER_REQUEST_PATH = 'order-request';
+const ACTIVE_ORDER_PATH = 'active-order';

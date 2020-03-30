@@ -14,6 +14,7 @@ class CartService {
   
   void reset(){
     _cartCurrentState = false;
+    _order = null;
   }
   void createOrder( OrderModel newOrder){
     _order = newOrder;
