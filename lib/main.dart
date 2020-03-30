@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'package:mr_miyagi_app/router.dart' as router ;
-import 'package:mr_miyagi_app/ui/views/sign_up_view.dart';
 import 'core/utils/routing_constant.dart' as routes;
 import 'package:mr_miyagi_app/locator.dart';
 
 import 'core/services/navigation_service.dart';
 
 import 'managers/dialog_manager.dart';
-import 'ui/views/startup_view.dart';
 
 void main() {
    setUpLocator();

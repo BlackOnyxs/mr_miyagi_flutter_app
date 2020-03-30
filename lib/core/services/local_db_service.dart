@@ -22,7 +22,7 @@ class LocalDBService{
       FoodModel _currentFood =  order.localFoods[i];
       LocalFood _currentLocalFood = new LocalFood(
         id: _currentFood.id,
-        name: _currentFood.name,
+        name: _currentFood.displayName,
         price: _currentFood.price,
         orderId: order.id
       );

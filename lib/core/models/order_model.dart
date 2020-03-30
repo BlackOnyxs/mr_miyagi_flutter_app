@@ -1,4 +1,3 @@
-
 import 'package:json_annotation/json_annotation.dart';
 
 import 'address_model.dart';
@@ -20,6 +19,7 @@ class OrderModel{
   List<FoodModel> localFoods;
   LatLng restaurantLocation;
   AddressModel userAddress;
+  dynamic position;
   //List<String> chat; TODO: create this POJO
   OrderModel({
     this.id,
@@ -34,6 +34,7 @@ class OrderModel{
     this.localFoods,
     this.restaurantLocation,
     this.userAddress,
+    this.position
     //this.chat,
   });
 

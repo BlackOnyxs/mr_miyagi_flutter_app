@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:mr_miyagi_app/core/models/menu_section_base.dart';
+import 'package:mr_miyagi_app/core/utils/database_constant.dart';
 import 'package:mr_miyagi_app/core/utils/routing_constant.dart';
 import 'package:mr_miyagi_app/core/viewmodels/home_view_model.dart';
 import 'package:mr_miyagi_app/ui/widgets/promotion_card_swiper.dart';
@@ -38,11 +39,11 @@ class HomeView extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.all(5.0),
               child: CircleAvatar(
-                backgroundImage: AssetImage('assets/default-user-img.png'),
+                backgroundImage: AssetImage('assets/order-view.png'),
                 radius: 25.0,
               ),
               ),
-              onTap: () => model.navigateTo(CART_VIEW_ROUTE),
+              onTap: () => model.navigateTo(ACTIVE_ORDERS_VIEW_ROUTE),
             ),
           ],
         ),
@@ -115,8 +116,7 @@ class HomeView extends StatelessWidget {
        ]
     ),
   
-  );
-                  
+    );     
     return Container(
       child: Stack(
         children: <Widget>[

@@ -7,7 +7,7 @@ part 'food_model.g.dart';
 @JsonSerializable( explicitToJson: true )
 class FoodModel {
     String id;
-    String name;
+    String displayName;
     String price;
     String photoUrl;
     String type;
@@ -18,7 +18,7 @@ class FoodModel {
     int cant;
     FoodModel({
         this.id,
-        this.name,
+        this.displayName,
         this.price,
         this.photoUrl,
         this.type,
@@ -36,7 +36,7 @@ class FoodModel {
     
      @override
   String toString() {
-    return "Food{ id:$id, name: $name, price: $price,\nphotoUrl: $photoUrl,\ntype: $type, model: $model,\nIngredients:\n$ingredients\ndescription: $description";
+    return "Food{ id:$id, name: $displayName, price: $price,\nphotoUrl: $photoUrl,\ntype: $type, model: $model,\nIngredients:\n$ingredients\ndescription: $description";
   }
 }
 

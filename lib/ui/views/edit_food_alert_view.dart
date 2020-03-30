@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:mr_miyagi_app/core/models/daily_lunch_model.dart';
 import 'package:mr_miyagi_app/core/models/ingredient_model.dart';
-import 'package:mr_miyagi_app/core/viewmodels/food_detail_alert_model.dart';
-import 'package:mr_miyagi_app/ui/views/base_view.dart';
+import 'package:mr_miyagi_app/core/viewmodels/cart_view_model.dart';
 
-class FoodDetailViewAlert  extends StatefulWidget {
-  final DailyLunchModel dailyLunch;
-  const FoodDetailViewAlert({Key key, this.dailyLunch}) : super(key: key);
+
+import 'base_view.dart';
+
+class EditFoodAlertView extends StatefulWidget {
+  final dynamic food;
+  const EditFoodAlertView({Key key, this.food}) : super(key: key);
 
   @override
-  _FoodDetailViewAlertState createState() => _FoodDetailViewAlertState();
+  _EditFoodAlertViewState createState() => _EditFoodAlertViewState();
 }
 
-class _FoodDetailViewAlertState extends State<FoodDetailViewAlert> {
+class _EditFoodAlertViewState extends State<EditFoodAlertView> {
   @override
   Widget build(BuildContext context) {
-    var _screenSize = MediaQuery.of(context).size;
-
-    return  BaseView<FoodDetailAlertModel>(
+     var _screenSize = MediaQuery.of(context).size;
+    return  BaseView<CartViewModel>(
       builder: ( context, model, child )=> Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.transparent,
@@ -25,8 +26,7 @@ class _FoodDetailViewAlertState extends State<FoodDetailViewAlert> {
           backgroundColor: Colors.transparent,
         ),
         body: SingleChildScrollView(
-           
-            scrollDirection: Axis.vertical,
+          scrollDirection: Axis.vertical,
           child:Container(
             child: Column(
               children: <Widget>[
@@ -38,7 +38,7 @@ class _FoodDetailViewAlertState extends State<FoodDetailViewAlert> {
                 Container(
                   margin: EdgeInsets.symmetric( vertical: 10.0),
                   padding: EdgeInsets.symmetric( vertical: 20.0),
-               
+                  height: double.infinity,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular( 25.0 ),
@@ -56,9 +56,9 @@ class _FoodDetailViewAlertState extends State<FoodDetailViewAlert> {
                       padding: EdgeInsets.only(left: 15.0, right: 15.0),
                       child: Column(
                       children: <Widget>[
-                        _createTitle(  widget.dailyLunch.displayName ),
-                        _createImage( widget.dailyLunch.food.photoUrl, _screenSize ),
-                        _createList(  widget.dailyLunch, model),
+                        _createTitle( widget.food.displayName ),
+                        (widget.food is DailyLunchModel)?
+                        _createList(  widget.food, model) : Container(),
                         _createCant( _screenSize, model ),
                         _createButton( model, context )
                       ],
@@ -71,30 +71,9 @@ class _FoodDetailViewAlertState extends State<FoodDetailViewAlert> {
         )
       )
     );
-  }
+  
+}
 
-  Widget _createImage( String photoUrl, Size size ){
-    final image = Container(
-    height: size.height * 0.3,
-    width: double.infinity,
-    child: ( widget.dailyLunch.food.photoUrl == null ) ?
-      Image(image: AssetImage('assets/no-image.jpg'))
-      : FadeInImage(
-        image: NetworkImage(widget.dailyLunch.food.photoUrl),
-        placeholder: AssetImage("assets/loading.gif"),
-        height: 200.0,
-        width: double.infinity,
-        fit: BoxFit.cover,
-      )
-    );
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(50.0),
-        child: Card(
-          elevation: 5.0,
-          child: image
-        ),
-    );
-  }
 
   Widget _createTitle( String name ){
     return Center(
@@ -108,7 +87,7 @@ class _FoodDetailViewAlertState extends State<FoodDetailViewAlert> {
     );
   }
 
-  Widget _createList(DailyLunchModel dailyLunch, FoodDetailAlertModel model ){
+  Widget _createList(dynamic dailyLunch, CartViewModel model ){
     if (dailyLunch != null && dailyLunch.food.ingredients.length > 0) {
       return ListView.builder(
         itemCount: dailyLunch.food.ingredients.length,
@@ -118,12 +97,12 @@ class _FoodDetailViewAlertState extends State<FoodDetailViewAlert> {
       );
     }else{
       return Center(
-        child: CircularProgressIndicator(),
+        child: CircularProgressIndicator(), //TODO: return Container
       );
     }
   }
 
-  Widget _createItem(IngredientModel ingredient, FoodDetailAlertModel model ){
+  Widget _createItem(IngredientModel ingredient, CartViewModel model ){
     return Card(
       elevation: 5,
       child: CheckboxListTile(
@@ -140,7 +119,7 @@ class _FoodDetailViewAlertState extends State<FoodDetailViewAlert> {
     );
   }
 
-  Widget _createCant( Size screenSize, FoodDetailAlertModel model ){
+  Widget _createCant( Size screenSize, CartViewModel model ){
     return Container(
       height: 45.0,
       child: Row(
@@ -180,7 +159,7 @@ class _FoodDetailViewAlertState extends State<FoodDetailViewAlert> {
     );
   }
 
- Widget _createButton( FoodDetailAlertModel model, BuildContext context  ){
+ Widget _createButton( CartViewModel model, BuildContext context  ){
    return Container(
      child: ClipRRect(
        borderRadius: BorderRadius.circular(20.0),
@@ -196,9 +175,9 @@ class _FoodDetailViewAlertState extends State<FoodDetailViewAlert> {
                 }else{
                   cant = 1;
                 }
-                widget.dailyLunch.food.cant = cant;
-                model.addFoodToOrder(widget.dailyLunch);        
-                model.hideCart(context);
+                widget.food.cant = cant;
+                model.updateOrder(widget.food.id, cant );        
+                model.goback();
               } : null,
               child: Text(
                 'Add to Cart',

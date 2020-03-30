@@ -18,6 +18,8 @@ CustomerUser _$CustomerUserFromJson(Map<String, dynamic> json) {
     ordersId: (json['ordersId'] as List)?.map((e) => e as String)?.toList(),
     feedback: json['feedback'] as String,
     email: json['email'] as String,
+    activeOrders:
+        (json['activeOrders'] as List)?.map((e) => e as String)?.toList(),
   );
 }
 
@@ -30,4 +32,5 @@ Map<String, dynamic> _$CustomerUserToJson(CustomerUser instance) =>
       'ordersId': instance.ordersId,
       'feedback': instance.feedback,
       'email': instance.email,
+      'activeOrders': instance.activeOrders,
     };

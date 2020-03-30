@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:mr_miyagi_app/core/models/daily_lunch_model.dart';
 import 'package:mr_miyagi_app/core/utils/routing_constant.dart';
 import 'package:mr_miyagi_app/core/viewmodels/daily_lunch_view_model.dart';
-import 'package:mr_miyagi_app/ui/widgets/food_detail_view_alert.dart';
 
 import 'base_view.dart';
 
@@ -88,7 +87,7 @@ class DailyLunchView extends StatelessWidget {
                 filter: ImageFilter.blur(sigmaX: 1.5, sigmaY: 1.5),
                 child: Column(
                   children: <Widget>[
-                    Text('${dailyLunch.food.name}', style: titleStyle),
+                    Text('${dailyLunch.food.displayName}', style: titleStyle),
 
                   ],
               )

@@ -202,9 +202,9 @@ Widget _createButton( SignUpViewModel model ){
         busy: model.busy,
         onPressed: ( snapshot.hasData ) ? (){
           model.signUp(
-            email: model.email,
-            password: model.password,
-            fullName: model.fullName
+            email: model.email.trim(),
+            password: model.password.trim(),
+            fullName: model.fullName.trim()
           );
         } : null
       );

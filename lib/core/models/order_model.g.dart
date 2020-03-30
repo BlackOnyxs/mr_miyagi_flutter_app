@@ -27,6 +27,7 @@ OrderModel _$OrderModelFromJson(Map<String, dynamic> json) {
     userAddress: json['userAddress'] == null
         ? null
         : AddressModel.fromJson(json['userAddress'] as Map<String, dynamic>),
+    position: json['position'],
   );
 }
 
@@ -44,4 +45,5 @@ Map<String, dynamic> _$OrderModelToJson(OrderModel instance) =>
       'localFoods': instance.localFoods?.map((e) => e?.toJson())?.toList(),
       'restaurantLocation': instance.restaurantLocation?.toJson(),
       'userAddress': instance.userAddress?.toJson(),
+      'position': instance.position,
     };

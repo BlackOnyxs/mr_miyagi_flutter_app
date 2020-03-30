@@ -179,8 +179,8 @@ Widget _createButton( LogInViewModel model ){
         busy: model.busy,
         onPressed: (snapshot.hasData) ? (){
           model.logIn(
-            email     :  model.email,
-            password  :  model.password,
+            email     :  model.email.trim(),
+            password  :  model.password.trim(),
           );
         } : null
       );

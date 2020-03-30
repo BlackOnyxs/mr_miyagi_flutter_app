@@ -15,9 +15,6 @@ class SignUpViewModel extends BaseModel with Validators{
   final DialogService _dialogService = locator<DialogService>();
   final NavigationService _navigationService = locator<NavigationService>();
 
-  
-
-
   Future signUp({@required String email, @required password, @required fullName}) async {
     setBusy(true);
 
